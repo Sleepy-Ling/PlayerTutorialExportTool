@@ -161,6 +161,11 @@ export default class WorkPlace extends cc.Component {
         const nowSelectStep = this.map_step.get(this.curSelectID);
         nowSelectStep?.setSelecting(true);
 
+        if (nowSelectStep) {
+            nowSelectStep.setFailBackToID(null);
+            this.updateTreeGraph();
+        }
+
     }
     protected onClickReloginBackConnect(id: number) {
         this.state = Enum_State.ReloginConnecting;
@@ -168,6 +173,11 @@ export default class WorkPlace extends cc.Component {
         this.curSelectID = id;
         const nowSelectStep = this.map_step.get(this.curSelectID);
         nowSelectStep?.setSelecting(true);
+
+        if (nowSelectStep) {
+            nowSelectStep.setReloginBackToID(null);
+            this.updateTreeGraph();
+        }
 
     }
 
@@ -269,21 +279,68 @@ export default class WorkPlace extends cc.Component {
     protected onTouchStepEnd() {
         this.isStepDirty = false;
         console.log("11");
-        
+
     }
 
     /**导出配置表 */
     protected onClickExportJson() {
         let result = {};
         let keys = Array.from(this.map_step.keys());
+
+        /**key : 步骤uid value：步骤序号 */
+        let tempMap: Map<number, number> = new Map();
+
+        let curStep: TutorialStep = null;
+        let startStepUID: number;
         for (const k of keys) {
             let step = this.map_step.get(k);
             if (step) {
-                let t = step.exportJson();
-                result[k] = t;
+                curStep = step;
+                let json = step.exportJson();
+                startStepUID = json.uid;
+                // let t = step.exportJson();
+
+                // let nextID = step.getConnectID();
+
+
+                // result[k] = t;
+
+                break;
             }
 
         }
+
+        /**导出的步骤序号 */
+        let index: number = 0;
+
+        while (curStep) {
+            let json = curStep.exportJson();
+
+            let nextID = curStep.getConnectID();
+            curStep = this.map_step.get(nextID);
+
+            tempMap[json.uid] = index;
+
+            index++;
+        }
+
+        index = 0;
+        curStep = this.map_step.get(startStepUID);
+        while (curStep) {
+            let json = curStep.exportJson();
+            let uid = json.backToStepIDWhenFail;
+            json.backToStepIDWhenFail = tempMap[uid];
+
+            uid = json.backToStepIDWhenRelogin;
+            json.backToStepIDWhenRelogin = tempMap[uid];
+
+            result[index] = json;
+
+            let nextID = curStep.getConnectID();
+            curStep = this.map_step.get(nextID);
+            index++;
+        }
+
 
         this.WriteFile("Table_PlayerTutorial.json", JSON.stringify(result));
     }

@@ -10,6 +10,7 @@ import { CustomEvent } from "./Event";
 const { ccclass, property } = cc._decorator;
 
 export interface TutorialTask {
+    uid: number;
     /**形状 0 长方形 1圆型 */
     shape?: cc.Mask.Type;
     /**是否显示遮罩 */
@@ -207,6 +208,18 @@ export default class TutorialStep extends cc.Component {
             this.EditBox_backToStepIDWhenReloginEventID.string = param.backToStepIDWhenRelogin.toString();
         }
 
+        if (param && param.bundleName) {
+            this.EditBox_module.string = param.bundleName;
+        }
+
+        if (param && param.targetView) {
+            this.EditBox_view.string = param.targetView.toString();
+        }
+
+        if (param && param.targetBtnPath) {
+            this.EditBox_btnPath.string = param.targetBtnPath;
+        }
+
         this.Toggle_showMask.isChecked = param && param.showMask;
         this.Toggle_canTouchMove.isChecked = param && param.canTouchMove;
         this.Toggle_isForceOpenView.isChecked = param && param.isForceOpenView;
@@ -297,6 +310,7 @@ export default class TutorialStep extends cc.Component {
             failEventID: failEventID,
             backToStepIDWhenFail: backToStepIDWhenFail,
             backToStepIDWhenRelogin: backToStepIDWhenRelogin,
+            uid: this.id,
         }
 
         return result;
@@ -357,7 +371,7 @@ export default class TutorialStep extends cc.Component {
 
     public setFailBackToID(id: number) {
         this.failBackToID = id;
-        this.EditBox_failBackEventID.string = id.toString();
+        this.EditBox_failBackEventID.string = id ? id.toString() : null;
     }
     public getFailBackToID() {
         return this.failBackToID;
@@ -365,7 +379,7 @@ export default class TutorialStep extends cc.Component {
 
     public setReloginBackToID(id: number) {
         this.reloginBackToID = id;
-        this.EditBox_backToStepIDWhenReloginEventID.string = id.toString();
+        this.EditBox_backToStepIDWhenReloginEventID.string = id ? id.toString() : null;
     }
     public getReloginBackToID() {
         return this.reloginBackToID;
