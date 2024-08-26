@@ -153,70 +153,70 @@ export default class TutorialStep extends cc.Component {
             this.EditBox_shape.string = param.shape.toString();
         }
 
-        if (param && param.center) {
+        if (param && param.center != null) {
             this.EditBox_worldPosX.string = param.center.x.toString();
             this.EditBox_worldPosY.string = param.center.y.toString();
         }
 
-        if (param && param.radius) {
+        if (param && param.radius != null) {
             this.EditBox_radius.string = param.radius.toString();
         }
 
-        if (param && param.size) {
+        if (param && param.size != null) {
             this.EditBox_width.string = param.size.width.toString();
             this.EditBox_height.string = param.size.height.toString();
         }
 
-        if (param && param.tips) {
+        if (param && param.tips != null) {
             this.EditBox_tips.string = param.tips.toString();
         }
 
-        if (param && param.tipsWorldPosition) {
+        if (param && param.tipsWorldPosition != null) {
             this.EditBox_tipsStartX.string = param.tipsWorldPosition.x.toString();
             this.EditBox_tipsStartY.string = param.tipsWorldPosition.y.toString();
         }
 
-        if (param && param.handAction) {
+        if (param && param.handAction != null) {
             this.EditBox_handActionType.string = param.handAction.toString();
         }
 
-        if (param && param.handActionDuration) {
+        if (param && param.handActionDuration != null) {
             this.EditBox_handDuration.string = param.handActionDuration.toString();
         }
-        if (param && param.handFromPos) {
+        if (param && param.handFromPos != null) {
             this.EditBox_handStartX.string = param.handFromPos.x.toString();
             this.EditBox_handStartY.string = param.handFromPos.y.toString();
         }
-        if (param && param.handToPos) {
+        if (param && param.handToPos != null) {
             this.EditBox_handEndX.string = param.handToPos.x.toString();
             this.EditBox_handEndY.string = param.handToPos.y.toString();
         }
 
-        if (param && param.eventID) {
+        if (param && param.eventID != null) {
             this.EditBox_successEventID.string = param.eventID;
         }
 
-        if (param && param.failEventID) {
+        if (param && param.failEventID != null) {
             this.EditBox_failEventID.string = param.failEventID;
         }
 
-        if (param && param.backToStepIDWhenFail) {
+        if (param && param.backToStepIDWhenFail != null) {
             this.EditBox_failBackEventID.string = param.backToStepIDWhenFail.toString();
         }
 
-        if (param && param.backToStepIDWhenRelogin) {
+        if (param && param.backToStepIDWhenRelogin != null) {
             this.EditBox_backToStepIDWhenReloginEventID.string = param.backToStepIDWhenRelogin.toString();
         }
 
-        if (param && param.bundleName) {
+        if (param && param.bundleName != null) {
             this.EditBox_module.string = param.bundleName;
         }
 
-        if (param && param.targetView) {
+        if (param && param.targetView != null) {
             this.EditBox_view.string = param.targetView.toString();
         }
 
-        if (param && param.targetBtnPath) {
+        if (param && param.targetBtnPath != null) {
             this.EditBox_btnPath.string = param.targetBtnPath;
         }
 
@@ -371,7 +371,7 @@ export default class TutorialStep extends cc.Component {
 
     public setFailBackToID(id: number) {
         this.failBackToID = id;
-        this.EditBox_failBackEventID.string = id ? id.toString() : null;
+        this.EditBox_failBackEventID.string = id != null ? id.toString() : null;
     }
     public getFailBackToID() {
         return this.failBackToID;
@@ -379,7 +379,7 @@ export default class TutorialStep extends cc.Component {
 
     public setReloginBackToID(id: number) {
         this.reloginBackToID = id;
-        this.EditBox_backToStepIDWhenReloginEventID.string = id ? id.toString() : null;
+        this.EditBox_backToStepIDWhenReloginEventID.string = id != null ? id.toString() : null;
     }
     public getReloginBackToID() {
         return this.reloginBackToID;

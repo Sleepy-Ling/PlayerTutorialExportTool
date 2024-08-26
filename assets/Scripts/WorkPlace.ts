@@ -233,22 +233,24 @@ export default class WorkPlace extends cc.Component {
                 if (nextStep) {
                     this.graphics.strokeColor = cc.Color.RED;
 
-                    this.graphics.moveTo(nowPos.x, nowPos.y);
                     let nextPos = nextStep.node.position;
-                    this.graphics.quadraticCurveTo((nowPos.x - nextPos.x) * 2, (nowPos.y + nextPos.y) / 2, nextPos.x, nextPos.y);
-                    // this.graphics.lineTo(nextPos.x, nextPos.y);
+                    let fromPosX = nowPos.x + 187.3;
+                    this.graphics.moveTo(fromPosX, nowPos.y + 152.8);
+                    this.graphics.quadraticCurveTo((fromPosX + nextPos.x) / 2, (nowPos.y + nextPos.y) / 2, nextPos.x, nextPos.y);
                     this.graphics.stroke();
 
                 }
+
 
                 //重连流程连线
                 nextStep = this.map_step.get(step.getReloginBackToID());
                 if (nextStep) {
                     this.graphics.strokeColor = cc.Color.YELLOW;
-
-                    this.graphics.moveTo(nowPos.x, nowPos.y);
                     let nextPos = nextStep.node.position;
-                    this.graphics.quadraticCurveTo((nowPos.x - nextPos.x) * 5, (nowPos.y + nextPos.y) / 2, nextPos.x, nextPos.y);
+                    let fromPosX = nowPos.x + 187.3;
+                    let dir: number = nextPos.x - nowPos.x > 0 ? 1 : -1;
+                    this.graphics.moveTo(fromPosX, nowPos.y + 80.8);
+                    this.graphics.quadraticCurveTo((fromPosX + nextPos.x) / 2, (nowPos.y + nextPos.y) / 2, nextPos.x, nextPos.y);
                     this.graphics.stroke();
 
                 }
@@ -409,15 +411,15 @@ export default class WorkPlace extends cc.Component {
                     const step = this.map_step.get(element.id);
 
                     if (step) {
-                        if (element.connectToID) {
+                        if (element.connectToID != null) {
                             step.connectTo(element.connectToID);
                         }
 
-                        if (element.failBackToID) {
+                        if (element.failBackToID != null) {
                             step.setFailBackToID(element.failBackToID);
                         }
 
-                        if (element.reloginBackToID) {
+                        if (element.reloginBackToID != null) {
                             step.setReloginBackToID(element.reloginBackToID);
                         }
                     }
